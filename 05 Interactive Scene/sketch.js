@@ -8,10 +8,10 @@ let currentBack = 0;
 
 //cloud x and y pos
 let cX = 200
-ran1 = Math.floor(Math.random() * 600);
-ran2 = Math.floor(Math.random() * 600);
-ran3 = Math.floor(Math.random() * 600);
-ran4 = Math.floor(Math.random() * 600);
+ran1 = Math.floor(Math.random() * 950);
+ran2 = Math.floor(Math.random() * 950);
+ran3 = Math.floor(Math.random() * 950);
+ran4 = Math.floor(Math.random() * 950);
 
 
 
@@ -28,7 +28,7 @@ function draw() {
   rectMode(CENTER);
   cloud(cX);
   
-  cX += 5
+  cX += 0.5
   if(cX >= width) {
     cX = -270;
   }
