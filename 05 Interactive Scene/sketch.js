@@ -22,6 +22,9 @@ let ccY = 100
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textSize(50)
+  text("Jayden", width-200, height-20); 
+  rectMode(CENTER);
   
     
 }
@@ -30,20 +33,11 @@ function draw() {
   backDrop();
   earth();
   sun();
-  rectMode(CENTER);
-  cloud(cX);
+  cloud();
   cloudCharacter();
   
-  cX += cY1 * 0.01
-  if(cX >= width + 270) {
-    cloudY();
-    cX = -270;
-    
-  }
 
-textSize(50)
-text("Jayden", width-200, height-20); 
-}  
+}
   
 
 
@@ -97,7 +91,7 @@ function backDrop(){
 }
 
 
-function cloud(cX){
+function cloud(){
   //draws 4 clouds at a random y coord (0-800)
   //tried to get a loop working but could not find a way
   
@@ -119,6 +113,15 @@ function cloud(cX){
   ellipse(cX + 250, cY4, 80, 60);
   ellipse(cX + 250  + 10, cY4  + 10, 80, 60);
   ellipse(cX + 250 - 20, cY4 + 10, 80, 60);
+
+
+
+  cX += cY1 * 0.01
+  if(cX >= width + 270) {
+    cloudY();
+    cX = -270;
+    
+  }
 }
 
 
@@ -132,6 +135,9 @@ function cloudY(){
 
 
 function cloudCharacter() {
+
+  
+  
   fill(255)
   ellipse(ccX, ccY, 80, 60);
   ellipse(ccX + 10, ccY  + 10, 80, 60);
