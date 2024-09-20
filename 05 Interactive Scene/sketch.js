@@ -8,11 +8,7 @@ let currentBack = 0;
 
 //cloud x position
 let cX = 200
-//generates random y coordinates for the clouds
-let cY1 = Math.floor(Math.random() * 800);
-let cY2 = Math.floor(Math.random() * 800);
-let cY3 = Math.floor(Math.random() * 800);
-let cY4 = Math.floor(Math.random() * 800);
+
 
 
 //cloud character x and y
@@ -22,8 +18,7 @@ let ccY = 100
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  textSize(50)
-  text("Jayden", width-200, height-20); 
+  textSize(50) 
   rectMode(CENTER);
   
     
@@ -35,6 +30,7 @@ function draw() {
   sun();
   cloud();
   cloudCharacter();
+  text("Jayden", width-200, height-20);
   
 
 }
@@ -92,46 +88,32 @@ function backDrop(){
 
 
 function cloud(){
-  //draws 4 clouds at a random y coord (0-800)
-  //tried to get a loop working but could not find a way
   
-  fill(255)
-  ellipse(cX, cY1, 110, 90);
-  ellipse(cX + 20, cY1  + 20, 110, 90);
-  ellipse(cX - 20, cY1 + 20, 110, 90);
-
+  randomSeed(5);
   
-  ellipse(cX+ 75, cY2, 80, 60);
-  ellipse(cX + 75 + 10, cY2  + 10, 80, 60);
-  ellipse(cX + 75 - 20, cY2 + 10, 80, 60);
+  for(let i = 0; i < 40; i++){
+   cY1 = random(0,height-100);
+   cxR = random(-1000,1000);
+   
+   fill(255)
+   ellipse(cX+cxR, cY1, 110, 90);
+   ellipse(cX +cxR + 20, cY1  + 20, 110, 90);
+   ellipse(cX+cxR - 20, cY1 + 20, 110, 90); 
+  }
+  
 
 
-  ellipse(cX - 100, cY3, 110, 90);
-  ellipse(cX - 100 + 10, cY3  + 10, 110, 90);
-  ellipse(cX - 100 - 20, cY3  + 10, 110, 90);
-
-  ellipse(cX + 250, cY4, 80, 60);
-  ellipse(cX + 250  + 10, cY4  + 10, 80, 60);
-  ellipse(cX + 250 - 20, cY4 + 10, 80, 60);
 
 
-
-  cX += cY1 * 0.01
-  if(cX >= width + 270) {
-    cloudY();
-    cX = -270;
+  cX += 2
+  if(cX >= width+1200) {
+    cX = -1000;
     
   }
 }
 
 
-function cloudY(){
-  //when the clouds reach the end of the screen it randomizes the y pos
-  cY1 = Math.floor(Math.random() * 800);
-  cY2 = Math.floor(Math.random() * 800);
-  cY3 = Math.floor(Math.random() * 800);
-  cY4 = Math.floor(Math.random() * 800);
-}
+
 
 
 function cloudCharacter() {
