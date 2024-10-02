@@ -3,8 +3,14 @@
 // 10/1/2024
 
 
-let h = 3;
-let w = 1;
+
+
+
+let rectW = 3;
+
+
+let flagX = 0;
+let flagY = 1;
 
 
 
@@ -13,13 +19,14 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(220);
   generateTerrain();
+  drawFlag(width / 2, flagY);
+  print(flagY);
 
 }
 
 function draw() {
   
-
-
+  
 
 }
 
@@ -27,28 +34,50 @@ function draw() {
 
 function generateTerrain() {
 
-  fill(0);
+  fill(255);
+  let cTime = 1;
 
-  for (let x = 0; x < width; x += 1) {
+
+  for (let x = 0; x <= width; x += rectW) {
+
+    let rectHeight = noise(cTime);
+    rectHeight = map(rectHeight, 0, 1, 10, 700);
+
+    rect(x, height, rectW, -rectHeight);
+    cTime += 0.01
     
-    let rectHeight = noise(h);
-    rectHeight = map(rectHeight, 0, 1, 10, 600);
 
-    rect(x, height, w, -rectHeight);
-    h += 0.01
+    
+    if (flagY < rectHeight) {
+      flagY = rectHeight
+      print("RECT " + rectHeight);
+    }
   }
+  
 }
 
 function keyPressed() {
-  generateTerrain();
-  if(keyPressed = LEFT_ARROW){
-    w -= 10
-    if(w <= 0){
-      w = 1
+  background(220)
+
+
+  if (keyCode === RIGHT_ARROW) {
+    background(220);
+    generateTerrain();
+    rectW += 0.3
+  } else if (keyCode === LEFT_ARROW) {
+    background(220);
+    generateTerrain();
+    rectW -= 0.3
+    if (rectW <= 1) {
+      rectW = 1
     }
   }
 }
 
+function drawFlag(x, y) {
+  fill(255, 255, 6);
+  rect(x, y, 20);
+}
 
 
 
