@@ -9,7 +9,7 @@
 let rectW = 1;
 
 
-let rTime = 5;
+let rTime = 0;
 let rInterval = 0.01
 
 
@@ -17,11 +17,14 @@ let rInterval = 0.01
 let flagX = 0;
 let flagY = 0;
 
+let avL = 0;
+let avH = 0;
+
 
 
 
 function setup() {
- 
+
   createCanvas(windowWidth, windowHeight);
   //background(220);
   //generateTerrain();
@@ -31,11 +34,19 @@ function setup() {
 }
 
 function draw() {
-  rTime = 5;
+  rTime = frameCount/15;
+
   background(220);
   generateTerrain();
+  lineAverage()
   drawFlag(flagX, height - flagY);
 
+
+  
+  
+  
+
+  
 
 
 
@@ -45,12 +56,15 @@ function draw() {
 
 function generateTerrain() {
   //randomly generates the terrain
-  
+
   fill(255);
 
   flagX = 0
   flagY = 0
+  avH = 0
+  avL = 0
 
+  //draws the terrain till it reaches the width
   for (let x = 0; x <= width; x += rectW) {
     //noiseSeed(5);
     let rectHeight = noise(rTime);
@@ -58,10 +72,14 @@ function generateTerrain() {
 
     rect(x, height, rectW, -rectHeight);
     rTime += rInterval;
-    if(x >= width){
+    if (x >= width) {
       x - rectW;
     }
+    avH += rectHeight
+    avL++
     
+
+
 
 
 
@@ -83,7 +101,7 @@ function keyPressed() {
   //redraws the flag at the highest peak
   if (keyCode === RIGHT_ARROW) {
     background(220);
-    rectW += 0.5;
+    rectW += 0.1;
     generateTerrain();
 
 
@@ -91,7 +109,7 @@ function keyPressed() {
     //redraws the flag at the highest peak
   } else if (keyCode === LEFT_ARROW) {
     background(220);
-    rectW -= 0.5;
+    rectW -= 0.1;
     generateTerrain();
 
 
@@ -111,4 +129,9 @@ function drawFlag(x, y) {
 
 
 
-
+function lineAverage(){
+  average = avH / avL
+  stroke(255,0,0);
+  line(0, height-average ,width, height-average);
+  stroke(0);
+}
