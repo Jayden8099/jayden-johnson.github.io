@@ -8,7 +8,7 @@
 //The rectangles width
 let rectW = 1;
 
-
+//noise time and interval
 let rTime = 0;
 let rInterval = 0.01
 
@@ -17,8 +17,10 @@ let rInterval = 0.01
 let flagX = 0;
 let flagY = 0;
 
-let avL = 0;
-let avH = 0;
+//rectangle total
+let rT = 0;
+//height total
+let hT = 0;
 
 
 
@@ -26,14 +28,15 @@ let avH = 0;
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
-  //background(220);
-  //generateTerrain();
+
 
 
 
 }
 
 function draw() {
+  //set rTime to frameCount/15
+  //gives effect of scrolling
   rTime = frameCount/15;
 
   background(220);
@@ -61,12 +64,12 @@ function generateTerrain() {
 
   flagX = 0
   flagY = 0
-  avH = 0
-  avL = 0
+  hT = 0
+  rT = 0
 
   //draws the terrain till it reaches the width
   for (let x = 0; x <= width; x += rectW) {
-    //noiseSeed(5);
+  
     let rectHeight = noise(rTime);
     rectHeight = map(rectHeight, 0, 1, 1, 800);
 
@@ -75,8 +78,11 @@ function generateTerrain() {
     if (x >= width) {
       x - rectW;
     }
-    avH += rectHeight
-    avL++
+    
+    
+    //used for finding the average height
+    hT += rectHeight
+    rT++
     
 
 
@@ -113,7 +119,7 @@ function keyPressed() {
     generateTerrain();
 
 
-
+    //makes sure rectW does not go below 1
     if (rectW <= 1) {
       rectW = 1;
     }
@@ -130,7 +136,8 @@ function drawFlag(x, y) {
 
 
 function lineAverage(){
-  average = avH / avL
+  //divides the total height by the total rectangles
+  average = hT / rT
   stroke(255,0,0);
   line(0, height-average ,width, height-average);
   stroke(0);
