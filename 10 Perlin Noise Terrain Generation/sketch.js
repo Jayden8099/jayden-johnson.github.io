@@ -108,7 +108,7 @@ function keyPressed() {
   if (keyCode === RIGHT_ARROW) {
     background(220);
     rectW += 0.1;
-    generateTerrain();
+    
 
 
     //if the left arrow is pressed it slims the rectangles
@@ -116,7 +116,7 @@ function keyPressed() {
   } else if (keyCode === LEFT_ARROW) {
     background(220);
     rectW -= 0.1;
-    generateTerrain();
+    
 
 
     //makes sure rectW does not go below 1
@@ -137,6 +137,7 @@ function drawFlag(x, y) {
 
 function lineAverage(){
   //divides the total height by the total rectangles
+  //to find the average and draw a line
   average = hT / rT
   stroke(255,0,0);
   line(0, height-average ,width, height-average);
