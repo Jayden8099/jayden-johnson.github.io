@@ -28,7 +28,7 @@ function clockFace() {
   fill(0);
   circle(0, 0, 10);
 
-  
+
   let minSpokes = 60;
   let hourSpokes = 12;
 
@@ -37,7 +37,9 @@ function clockFace() {
   let m = minute();
   let h = hour();
 
-  map(s,0,59,0,360);
+  s = map(s, 0, 59, 0, 359);
+  m = map(m, 0, 59, 0, 359);
+  h = map(h, 0, 12, 0, 359);
 
   for (let i = 0; i < minSpokes; i++) {
     line(145, 0, 135, 0);
@@ -48,31 +50,34 @@ function clockFace() {
     line(145, 0, 120, 0);
     rotate(30);
   }
-  
-  
+
+
   //second hand
   push();
   rotate(s);
+  stroke(255, 0, 0);
   line(0, 0, 0, -90);
   pop();
- 
-  
+
+
   push();
   rotate(m);
-  line(0,0,0,-100);
+  line(0, 0, 0, -100);
   pop();
-  
 
-  // push();
-  // rotate(h);
-  // line(0,0,0,-100);
-  // pop();
- 
 
-  
-    
-    
- 
+
+
+  push();
+  rotate(h);
+  line(0, 0, 0, -100);
+  pop();
+
+
+
+
+
+
 
 
 
