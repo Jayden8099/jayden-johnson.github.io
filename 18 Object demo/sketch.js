@@ -1,6 +1,6 @@
-// Project Title
-// Your Name
-// Date
+// Class Array Demo
+// Jayden Johnson
+// 10/17/2024
 
 
 const SEGMENT_REACH = 250;
@@ -59,7 +59,7 @@ class MiniPoint {
   connectPoints(pointArray) {
 
     for (let i = 0; i < pointArray.length; i++) {
-      
+
       //this.x   this.y  pointArray[i].x  pointArray[i].y
       stroke(this.c);
       if (this !== pointArray[i]) {
@@ -67,9 +67,7 @@ class MiniPoint {
           line(this.x, this.y, pointArray[i].getX(), pointArray[i].getY());
         }
       }
-
     }
-
   }
 
   getX() {
