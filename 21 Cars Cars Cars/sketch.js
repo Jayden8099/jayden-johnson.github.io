@@ -1,21 +1,44 @@
 // Cars Cars Cars
 // Jayden Johnson
 // 10/18/2024
-let test1;
 
+
+let eastbound = [];
+let westbound = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
-  test1 = new Vehicle(width/2, height/2, 0, 0);
+  for (let i = 0; i < 20; i++) {
+    eastbound.push(new Vehicle((random(0, width)), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
+    westbound.push(new Vehicle((random(0, width)), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
+  }
 }
 
 function draw() {
   background(220);
   drawRoad();
-  //test1.display();
-  test1.action();
 
+
+  for (let i = 0; i < eastbound.length; i++) {
+    eastbound[i].action();
+  }
+  for (let i = 0; i < westbound.length; i++) {
+    westbound[i].action();
+  }
+
+
+
+}
+function mouseClicked() {
+  if (keyIsPressed && keyCode === SHIFT) {
+    westbound.push(new Vehicle((random(0, width)), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
+    print(westbound.length+'west');
+  }
+  else{
+    eastbound.push(new Vehicle((random(0, width)), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
+    print(eastbound.length+'east');
+  }
 }
 
 
@@ -30,13 +53,6 @@ function drawRoad() {
     strokeWeight(2);
     line(i, height / 2, i += 20, height / 2);
   }
-
-
-
-
-
-
-
 }
 
 class Vehicle {
@@ -53,11 +69,11 @@ class Vehicle {
   display() {
     if (this.type === 0) {
       fill(this.color);
-      rect(this.x, this.y, 100, 25);
+      rect(this.x, this.y, 75, 40);
     }
     else {
       fill(this.color);
-      rect(this.x, this.y, 40);
+      rect(this.x, this.y, 25);
     }
   }
 
@@ -88,15 +104,15 @@ class Vehicle {
       if (this.xSpeed >= this.MAX_SPEED) {
         this.xSpeed = this.MAX_SPEED;
       }
-    } 
+    }
 
     //Right Moving Traffic
     else {
-      this.xSpeed += -3;
+      this.xSpeed += 1;
       if (-this.xSpeed <= -this.MAX_SPEED) {
         this.xSpeed = -this.MAX_SPEED;
       }
-      else if(-this.xSpeed >= 0){
+      else if (-this.xSpeed >= 0) {
         this.xSpeed = 0;
       }
     }
@@ -107,40 +123,41 @@ class Vehicle {
   speedDown() {
     //Left Moving Traffic
     if (this.direction === 0) {
-      this.xSpeed - 1;
-      if (this.xSpeed <= -this.MAX_SPEED) {
-        this.xSpeed = -this.MAX_SPEED;
+      this.xSpeed -= 1;
+      if (this.xSpeed <= 0) {
+        this.xSpeed = 1;
       }
     }
     //Right Moving Traffic
     else {
-      this.xSpeed + 1;
-      if (this.xSpeed >= 0) {
-        this.xSpeed = 0;
+      this.xSpeed -= 1;
+      if (this.xSpeed <= 0) {
+        this.xSpeed = 1;
       }
     }
   }
-  action(){
+  action() {
     this.move();
     this.display();
-    
-    this.rng = round(random(1,100));
-    
-   
-    
-    if(this.rng === 1){
-      //this.speedUp();
-      //print('speed up');
+
+    this.rng = round(random(1, 100));
+
+
+
+    if (this.rng === 1) {
+      this.speedUp();
       //print(this.xSpeed);
+
     }
-    else if(this.rng === 2){
-      //this.speedDown;
-      //print('speed down');
+    else if (this.rng === 2) {
+      this.speedDown();
+      //print(this.xSpeed);
+
     }
-    else if(this.rng === 3){
+    else if (this.rng === 3) {
       this.color = color(random(255), random(255), random(255));
-      //print('changed color');
+
     }
-    
+
   }
 }
