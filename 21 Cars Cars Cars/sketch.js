@@ -2,13 +2,15 @@
 // Jayden Johnson
 // 10/18/2024
 
-
+//Arrays that contain all the vehicles
 let eastbound = [];
 let westbound = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  //Pushes 20 new Vehicles to each Array at a random X and Y based on direction
+  //Aswell as a random vehicle type
   for (let i = 0; i < 20; i++) {
     eastbound.push(new Vehicle((random(0, width)), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
     westbound.push(new Vehicle((random(0, width)), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
@@ -31,13 +33,15 @@ function draw() {
 
 }
 function mouseClicked() {
+  //If shift left clicking  push a new Vehicle to westbound
   if (keyIsPressed && keyCode === SHIFT) {
     westbound.push(new Vehicle((random(0, width)), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
-    print(westbound.length+'west');
+    
   }
+  //If Left clicking push a new vehicle to eastbound
   else{
     eastbound.push(new Vehicle((random(0, width)), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
-    print(eastbound.length+'east');
+    
   }
 }
 
@@ -141,8 +145,6 @@ class Vehicle {
     this.display();
 
     this.rng = round(random(1, 100));
-
-
 
     if (this.rng === 1) {
       this.speedUp();
