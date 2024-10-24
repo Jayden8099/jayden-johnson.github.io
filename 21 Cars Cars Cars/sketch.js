@@ -169,9 +169,10 @@ class Vehicle {
 class trafficLight {
   constructor(state) {
     this.state = state;
-    this.interval = 2000;
+    this.interval = 2;
     this.prevTime;
     this.check;
+    this.timeClicked;
   }
   display() {
     fill(0);
@@ -184,18 +185,25 @@ class trafficLight {
       fill(255, 0, 0);
       circle(80, 120, 60);
     }
+    this.prevTime = second();
   }
-  update() {
-    this.prevTime = millis();
-    
-    this.state = 1;
-    
-    this.check = this.prevTime + this.interval;
 
-    print(this.state);
-    if (millis() > this.check) {
+  update() {
+
+    this.timeClicked = this.prevTime;
+    print(this.timeClicked);
+    this.state = 1;
+
+    this.check = this.timeClicked + this.interval;
+    print(this.check);
+
+
+    if (this.check < this.prevTime) {
       this.state = 0;
       print(this.state);
+    }
+    else if(this.check > this.prevTime){
+      this.timeClicked++;
     }
   }
 
