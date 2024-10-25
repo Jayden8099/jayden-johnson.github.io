@@ -10,20 +10,20 @@ let westbound = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+
   //Pushes 20 new Vehicles to each Array at a random X and Y based on direction
   //Aswell as a random vehicle type
   for (let i = 0; i < 20; i++) {
+    //                            random x           random y within their lanes               random type       direction
     eastbound.push(new Vehicle(random(0, width), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
     westbound.push(new Vehicle(random(0, width), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
   }
-  trafficL = new trafficLight(0);
 }
 
 function draw() {
 
   background(220);
   drawRoad();
-  trafficL.display();
 
   for (let i = 0; i < eastbound.length; i++) {
     eastbound[i].action();
@@ -36,18 +36,14 @@ function mouseClicked() {
   //If shift left clicking  push a new Vehicle to westbound
   if (keyIsPressed && keyCode === SHIFT) {
     westbound.push(new Vehicle(random(0, width), random(height / 2 - 30, height / 2 - 200), round(random(0, 1)), 1));
-
   }
   //If Left clicking push a new vehicle to eastbound
   else {
     eastbound.push(new Vehicle(random(0, width), random(height / 2 + 30, height / 2 + 200), round(random(0, 1)), 0));
+
   }
 }
-function keyPressed() {
-  if (keyCode === 32) {
-    trafficL.update();
-  }
-}
+
 
 
 
@@ -76,10 +72,12 @@ class Vehicle {
     this.rng;
   }
   display() {
+    //Car (Small Square)
     if (this.type === 0) {
       fill(this.color);
       rect(this.x, this.y, 75, 40);
     }
+    //Truck (Rectangle)
     else {
       fill(this.color);
       rect(this.x, this.y, 25);
@@ -87,17 +85,22 @@ class Vehicle {
   }
 
   move() {
+    // if the direction = east
+    //this.x changes by this.xSpeed
     if (this.direction === 0) {
       this.x += this.xSpeed;
 
+      //wrap around code
       if (this.x >= width + 100) {
         this.x -= width + 100;
       }
     }
-
+    // if the direction = west
+    //this.x changes by -xSpeed
     else {
       this.x -= this.xSpeed;
 
+      //wrap around code
       if (this.x <= 0 - 100) {
         this.x += width + 100;
       }
@@ -107,106 +110,56 @@ class Vehicle {
 
 
   speedUp() {
-    //Left Moving Traffic 
-    if (this.direction === 0) {
-      this.xSpeed += 1;
-      if (this.xSpeed >= this.MAX_SPEED) {
-        this.xSpeed = this.MAX_SPEED;
-      }
-    }
-
-    //Right Moving Traffic
-    else {
-      this.xSpeed += 1;
-      if (-this.xSpeed <= -this.MAX_SPEED) {
-        this.xSpeed = -this.MAX_SPEED;
-      }
-      else if (-this.xSpeed >= 0) {
-        this.xSpeed = 0;
-      }
+    //Speeds up the traffic
+    this.xSpeed += 1;
+    
+    //make sure it stays below or at the max speed
+    if (this.xSpeed >= this.MAX_SPEED) {
+      this.xSpeed = this.MAX_SPEED;
     }
   }
 
 
 
   speedDown() {
-    //Left Moving Traffic
-    if (this.direction === 0) {
-      this.xSpeed -= 1;
-      if (this.xSpeed <= 0) {
-        this.xSpeed = 1;
-      }
-    }
-    //Right Moving Traffic
-    else {
-      this.xSpeed -= 1;
-      if (this.xSpeed <= 0) {
-        this.xSpeed = 1;
-      }
+    //slows down the traffic
+    this.xSpeed -= 1;
+
+    //make sure it stays above 0
+    if (this.xSpeed <= 0) {
+      this.xSpeed = 1;
     }
   }
+
   action() {
     this.move();
     this.display();
 
     this.rng = round(random(1, 100));
 
+    //if the random(1,100) = 1 
+    //then speed up the car
     if (this.rng === 1) {
       this.speedUp();
-      //print(this.xSpeed);
+      
+
 
     }
+    //else if the random(1,100) = 2
+    //slow down the car
     else if (this.rng === 2) {
       this.speedDown();
-      //print(this.xSpeed);
+      
+
 
     }
+    //if the random(1,100) = 3
+    // change the cars color
     else if (this.rng === 3) {
       this.color = color(random(255), random(255), random(255));
     }
   }
 }
-class trafficLight {
-  constructor(state) {
-    this.state = state;
-    this.interval = 2;
-    this.prevTime;
-    this.check;
-    this.timeClicked;
-  }
-  display() {
-    fill(0);
-    rect(80, 80, 100, 200);
-    if (this.state === 0) {
-      fill(0, 255, 0);
-      circle(80, 50, 60);
-    }
-    else {
-      fill(255, 0, 0);
-      circle(80, 120, 60);
-    }
-    this.prevTime = second();
-  }
 
-  update() {
-
-    this.timeClicked = this.prevTime;
-    print(this.timeClicked);
-    this.state = 1;
-
-    this.check = this.timeClicked + this.interval;
-    print(this.check);
-
-
-    if (this.check < this.prevTime) {
-      this.state = 0;
-      print(this.state);
-    }
-    else if(this.check > this.prevTime){
-      this.timeClicked++;
-    }
-  }
-
-}
 
 
