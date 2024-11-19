@@ -11,7 +11,7 @@ let scale = 15;
 
 let seed; // used for randomseed
 
-let bDepth = 0; //Depth that balloons are drawn at
+let bDepth = 1; //Depth that balloons are drawn at
 
 
 function setup() { 
